@@ -11,11 +11,15 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class UserDao {
+    ConnectionMaker connectionMaker;
+    public UserDao() {
+        connectionMaker = new DConnectionMaker();
+    }
 
-    SimpleConnectionMaker connectionMaker = new SimpleConnectionMaker();
+//    SimpleConnectionMaker connectionMaker = new SimpleConnectionMaker();
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection conn = connectionMaker.makeNewConnection();
+        Connection conn = connectionMaker.makeConnection();
 
         PreparedStatement pstmt = conn.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
         pstmt.setString(1, user.getId());
@@ -28,7 +32,7 @@ public class UserDao {
     }
 
     public User get(String id) throws SQLException, ClassNotFoundException {
-        Connection conn = connectionMaker.makeNewConnection();
+        Connection conn = connectionMaker.makeConnection();
 
         PreparedStatement pstmt = conn.prepareStatement("select id, name, password from users where id = ?");
         pstmt.setString(1, id);
