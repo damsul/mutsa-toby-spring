@@ -13,7 +13,7 @@ import java.util.Map;
 public class ConnectionChecker {
     public void check()throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("url", "root", "1234");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://ec2-3-38-44-84.ap-northeast-2.compute.amazonaws.com:3306/spring-db", "root", "1234");
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SHOW DATABASES");
@@ -26,7 +26,7 @@ public class ConnectionChecker {
 
     public void add() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("url", "root", "1234");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://ec2-3-38-44-84.ap-northeast-2.compute.amazonaws.com:3306/spring-db", "root", "1234");
 
         PreparedStatement pstmt = conn.prepareStatement(
             "insert into users(id, name, password) values(?, ?, ?)");
@@ -38,7 +38,7 @@ public class ConnectionChecker {
 
     public void select() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("url", "root", "1234");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://ec2-3-38-44-84.ap-northeast-2.compute.amazonaws.com:3306/spring-db", "root", "1234");
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("select * from users");
