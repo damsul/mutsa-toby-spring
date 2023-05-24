@@ -10,12 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public abstract class UserDao {
+public class UserDao {
 
-    public abstract Connection getConnection() throws SQLException, ClassNotFoundException;
+    SimpleConnectionMaker connectionMaker = new SimpleConnectionMaker();
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makeNewConnection();
 
         PreparedStatement pstmt = conn.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
         pstmt.setString(1, user.getId());
@@ -28,7 +28,7 @@ public abstract class UserDao {
     }
 
     public User get(String id) throws SQLException, ClassNotFoundException {
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makeNewConnection();
 
         PreparedStatement pstmt = conn.prepareStatement("select id, name, password from users where id = ?");
         pstmt.setString(1, id);
@@ -48,16 +48,16 @@ public abstract class UserDao {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new NUserDao();
+        UserDao userDao = new UserDao();
 //        userDao.add();
 //        userDao.get();
         User user = new User();
-        user.setId("1");
-        user.setName("damsul");
+        user.setId("2");
+        user.setName("gh");
         user.setPassword("1234");
-        userDao.add(user);
+//        userDao.add(user);
 
-        User selectedUser = userDao.get("1");
+        User selectedUser = userDao.get("2");
         System.out.println(selectedUser.getId());
         System.out.println(selectedUser.getName());
         System.out.println(selectedUser.getPassword());

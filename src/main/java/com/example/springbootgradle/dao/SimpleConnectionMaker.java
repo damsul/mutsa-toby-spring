@@ -7,10 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class NUserDao extends UserDao{
+public class SimpleConnectionMaker {
 
-    @Override
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
+    public Connection makeNewConnection() throws ClassNotFoundException, SQLException {
         Map<String, String> env = getenv();
         String dbHost = env.get("DB_HOST");
         String dbUser = env.get("DB_USER");
@@ -18,6 +17,7 @@ public class NUserDao extends UserDao{
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(dbHost, dbUser, dbPassword);
+
         return conn;
     }
 }
